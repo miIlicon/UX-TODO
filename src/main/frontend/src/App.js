@@ -3,37 +3,32 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 
 function App() {
-  const [message, setMessage] = useState([]);
+  const [message1, setMessage1] = useState("");
+  const [message2, setMessage2] = useState("");
+
   useEffect(() => {
     fetch("/hello")
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        setMessage(data);
+        // setMessage(message => [...message, data]);
+        setMessage1(data[0]);
+        setMessage2(data[1]);
       });
   }, []);
+
+  const Test = () => {
+    return (
+      <div>
+        {message1} <br />
+        {message2}
+      </div>)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <ul>
-          {message.map((v, idx) => (
-            <li key={`${idx}-${v}`}>{v}</li>
-          ))}
-        </ul>
-      </header>
+      <Test />
     </div>
   );
 }
