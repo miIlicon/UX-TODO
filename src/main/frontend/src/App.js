@@ -17,11 +17,34 @@ function App() {
     //     setMessage1(data[0]);
     //     setMessage2(data[1]);
     //   });
+
     axios.get('/hello')
       .then((res) => {
+        console.log(res);
         console.log(res.data);
         setMessage1(res.data[0]);
         setMessage2(res.data[1]);
+      })
+
+    // axios({
+    //   title: "제목",
+    //   contents: "내용",
+    //   url: '/hello',
+    //   method: 'post',
+    //   data: {
+    //     name: 'veneas'
+    //   }
+    // })
+
+    axios.post('/hello', {
+      title: "제목",
+      contents: "내용",
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log("에러!")
       })
   }, []);
 
