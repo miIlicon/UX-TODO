@@ -2,8 +2,11 @@ import logo from "./logo.svg";
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from 'js-cookie'
 
 function App() {
+
+  const csrftoken = Cookies.get('csrftoken') // Cookies from Django Domain
   const [message1, setMessage1] = useState("");
   const [message2, setMessage2] = useState("");
 
@@ -20,7 +23,7 @@ function App() {
 
     axios.get('/hello')
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         console.log(res.data);
         setMessage1(res.data[0]);
         setMessage2(res.data[1]);
@@ -37,15 +40,25 @@ function App() {
     // })
 
     axios.post('/hello', {
-      title: "제목",
-      contents: "내용",
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+      },
+      data: {
+        title: "제목",
+        contents: "내용",
+      },
     })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log("에러!")
-      })
+
+    // axios({
+    //   url: '/hello',
+    //   method: 'post',
+    //   data: {
+    //     title: "제목",
+    //     contents: "내용",
+    //   },
+
+    // })
   }, []);
 
   const Test = () => {
