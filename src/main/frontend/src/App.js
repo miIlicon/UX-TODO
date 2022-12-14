@@ -42,13 +42,16 @@ function App() {
     axios.post('/hello', {
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken,
       },
       data: {
         title: "제목",
         contents: "내용",
       },
-    })
+      })
+      .then((res) => {
+        console.log("test");
+      });
+    }, []);
 
     // axios({
     //   url: '/hello',
@@ -59,7 +62,6 @@ function App() {
     //   },
 
     // })
-  }, []);
 
   const Test = () => {
     return (
