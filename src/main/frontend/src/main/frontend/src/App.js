@@ -1,15 +1,25 @@
+import logo from "./logo.svg";
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
-import Main from "./component/Main";
+// import Cookies from 'js-cookie'
 
 function App() {
 
+  // const csrftoken = Cookies.get('csrftoken') // Cookies from Django Domain
   const [message1, setMessage1] = useState("");
   const [message2, setMessage2] = useState("");
 
   useEffect(() => {
+    // fetch("/hello")
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    //   .then((data) => {
+    //     // setMessage(message => [...message, data]);
+    //     setMessage1(data[0]);
+    //     setMessage2(data[1]);
+    //   });
 
     axios.get('/hello')
       .then((res) => {
@@ -19,21 +29,24 @@ function App() {
         setMessage2(res.data[1]);
       })
 
-    /* axios('url', {
-      내용물들
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })*/
+    // axios({
+    //   title: "제목",
+    //   contents: "내용",
+    //   url: '/hello',
+    //   method: 'post',
+    //   data: {
+    //     name: 'veneas'
+    //   }
+    // })
 
     axios.post('/hello',
       JSON.stringify({
-        id: 1,
-        date: "2022-12-16",
-        content: "take a shower",
-        state: false,
+        data: {
+          id: 1,
+          date: "2022-12-16",
+          content: "take a shower",
+          state: false,
+        },
       }),
       {
         headers: {
@@ -66,8 +79,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Test /> */}
-      <Main />
+      <Test />
     </div>
   );
 }
