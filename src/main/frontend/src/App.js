@@ -2,11 +2,11 @@ import logo from "./logo.svg";
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 
 function App() {
 
-  const csrftoken = Cookies.get('csrftoken') // Cookies from Django Domain
+  // const csrftoken = Cookies.get('csrftoken') // Cookies from Django Domain
   const [message1, setMessage1] = useState("");
   const [message2, setMessage2] = useState("");
 
@@ -44,24 +44,26 @@ function App() {
         'Content-Type': 'application/json',
       },
       data: {
-        title: "제목",
-        contents: "내용",
+        id: 1,
+        date: "2022-12-16",
+        content: "take a shower",
+        state: false,
       },
-      })
+    })
       .then((res) => {
         console.log("test");
       });
-    }, []);
+  }, []);
 
-    // axios({
-    //   url: '/hello',
-    //   method: 'post',
-    //   data: {
-    //     title: "제목",
-    //     contents: "내용",
-    //   },
+  // axios({
+  //   url: '/hello',
+  //   method: 'post',
+  //   data: {
+  //     title: "제목",
+  //     contents: "내용",
+  //   },
 
-    // })
+  // })
 
   const Test = () => {
     return (
