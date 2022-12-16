@@ -1,8 +1,11 @@
 package com.sy.MyTodo.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.JsonObject;
+import com.sy.MyTodo.dto.DataDto;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +22,12 @@ public class HelloController {
     }
 
     @PostMapping("hello")
-    public String postHello(@RequestBody String s) throws ParseException {
+    public String postHello(@RequestBody DataDto dto)
+    {
 
-        System.out.println(s);
+        System.out.println(dto);
 
-        return s;
+
+        return "ok";
     }
 }
