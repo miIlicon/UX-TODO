@@ -235,13 +235,13 @@ export default function Main() {
     const [value, setValue] = useState("");
 
     /* 데이터베이스에서 값을 가져오는 useEffect */
-    useEffect(() => {
-        axios.get('/select')
-            .then((res) => {
-                console.log(res);
-                setLst((prev) => [...prev, res]);
-            });
-    })
+    // useEffect(() => {
+    //     axios.get('/select')
+    //         .then((res) => {
+    //             console.log(res);
+    //             setLst((prev) => [...prev, res]);
+    //         });
+    // })
 
     const handleChange = (event) => {
         setValue(event.target.value);
@@ -264,6 +264,12 @@ export default function Main() {
                 alert("데이터를 성공적으로 넘겼어요!");
                 setValue("");
                 inputRef.current.value = "";
+
+                axios.get('/select')
+                    .then((res) => {
+                        // console.log(res);
+                        setLst((prev) => [...prev, res]);
+                    });
             })
 
             .catch((err) => {
@@ -271,23 +277,6 @@ export default function Main() {
                 inputRef.current.value = "";
             })
     };
-
-    // axios.post('/hello',
-    //     JSON.stringify({
-    //         id: 1,
-    //         date: "2022-12-16",
-    //         content: "take a shower",
-    //         state: false,
-    //     }),
-    //     {
-    //         headers: {
-    //             "Content-type": "application/json",
-    //         },
-    //     }
-    // )
-    //     .then((res) => {
-    //         console.log(res);
-    //     });
 
     console.log(lst);
 
