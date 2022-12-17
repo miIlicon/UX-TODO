@@ -235,6 +235,7 @@ export default function Main() {
     };
 
     const handleSubmit = () => {
+        alert("버튼이 눌렸어요!");
         axios.post('/create', JSON.stringify({
             date: userDate,
             content: value,
@@ -270,7 +271,7 @@ export default function Main() {
                                 <SubTitle>오늘의 할 일</SubTitle>
                                 <Input placeholder="제목을 입력해주세요" onChange={handleChange} defaultValue={value} />
                             </div>
-                            <Button onSubmit={handleSubmit}>나의 오늘을 기록하기</Button>
+                            <Button onClick={handleSubmit}>나의 오늘을 기록하기</Button>
                         </ContentBox>
                     </Container>
                 </Article>
