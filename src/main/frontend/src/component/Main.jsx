@@ -227,6 +227,10 @@ export default function Main() {
         return `${year}년 ${month}월 ${date}일`
     });
 
+    const [userDate_B, setUserDate_B] = useState(() => {
+        return `${year}-${month}-${date}`
+    })
+
     const [checkState, setCheckState] = useState(false);
     const [value, setValue] = useState("");
 
@@ -237,7 +241,7 @@ export default function Main() {
     const handleSubmit = () => {
         alert("버튼이 눌렸어요!");
         axios.post('/create', JSON.stringify({
-            date: userDate,
+            date: userDate_B,
             content: value,
             state: false,
         }),
