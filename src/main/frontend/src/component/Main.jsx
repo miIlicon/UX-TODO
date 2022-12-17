@@ -254,8 +254,8 @@ export default function Main() {
     const handleCheck = (item) => {
         if (window.confirm("해당 일정을 완료하셨나요?")) {
             axios.put(`/update/${item.id}`, JSON.stringify({
-                ...lst,
-                state: !lst.state,
+                ...item,
+                state: !item.state,
             }),
                 {
                     headers: {
