@@ -268,8 +268,10 @@ export default function Main() {
                 axios.get('/select')
                     .then((res) => {
                         // console.log(res);
-                        setLst((prev) => [...prev, res]);
+                        setLst((prev) => [...prev, res.data]);
                     });
+                
+                console.log(lst);
             })
 
             .catch((err) => {
@@ -277,8 +279,6 @@ export default function Main() {
                 inputRef.current.value = "";
             })
     };
-
-    console.log(lst);
 
     return (
         <>
