@@ -37,7 +37,7 @@ function App() {
       }),
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-type": "applcation/json",
         },
       }
     )
