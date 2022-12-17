@@ -218,6 +218,13 @@ const Button = styled.button.attrs({
 
 export default function Main() {
 
+    useEffect(() => {
+        axios.get('/select')
+            .then((res) => {
+                console.log(res);
+            });
+    })
+
     const time = new Date();
     const year = time.getFullYear();
     const month = time.getMonth() + 1;
@@ -226,11 +233,9 @@ export default function Main() {
     const [userDate, setUserDate] = useState(() => {
         return `${year}년 ${month}월 ${date}일`
     });
-
     const [userDate_B, setUserDate_B] = useState(() => {
         return `${year}-${month}-${date}`
     })
-
     const [checkState, setCheckState] = useState(false);
     const [value, setValue] = useState("");
 
