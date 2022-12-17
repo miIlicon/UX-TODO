@@ -263,6 +263,9 @@ export default function Main() {
                     },
                 }
             )
+                .then((res) => {
+                    setPostState(true);
+                })
         }
     }
 
