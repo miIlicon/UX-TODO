@@ -289,6 +289,8 @@ export default function Main() {
     //         console.log(res);
     //     });
 
+    console.log(lst);
+
     return (
         <>
             <Section>
