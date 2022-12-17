@@ -35,7 +35,6 @@ public class TodoContentServiceImpl implements TodoContentService {
     @Override
     public void updateTodoContent(long id) {
         TodoContent todoContent = todoContentRepository.findById(id).orElse(new TodoContent());
-        todoContent.setContent("update content");
         todoContentRepository.save(todoContent);
     }
 
