@@ -243,8 +243,8 @@ export default function Main() {
         }),
             {
                 headers: {
-                    "Content-type": "applcation/json",
-                }
+                    "Content-type": "application/json",
+                },
             }
         )
             .then((res) => {
@@ -255,22 +255,22 @@ export default function Main() {
             })
     };
 
-    axios.post('/hello',
-        JSON.stringify({
-            id: 1,
-            date: "2022-12-16",
-            content: "take a shower",
-            state: false,
-        }),
-        {
-            headers: {
-                "Content-type": "application/json",
-            },
-        }
-    )
-        .then((res) => {
-            console.log(res);
-        });
+    // axios.post('/hello',
+    //     JSON.stringify({
+    //         id: 1,
+    //         date: "2022-12-16",
+    //         content: "take a shower",
+    //         state: false,
+    //     }),
+    //     {
+    //         headers: {
+    //             "Content-type": "application/json",
+    //         },
+    //     }
+    // )
+    //     .then((res) => {
+    //         console.log(res);
+    //     });
 
     return (
         <>

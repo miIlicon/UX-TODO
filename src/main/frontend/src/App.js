@@ -28,22 +28,22 @@ function App() {
       }
     })*/
 
-    axios.post('/hello',
-      JSON.stringify({
-        id: 1,
-        date: "2022-12-16",
-        content: "take a shower",
-        state: false,
-      }),
-      {
-        headers: {
-          "Content-type": "applcation/json",
-        },
-      }
-    )
-      .then((res) => {
-        console.log(res);
-      });
+    // axios.post('/hello',
+    //   JSON.stringify({
+    //     id: 1,
+    //     date: "2022-12-16",
+    //     content: "take a shower",
+    //     state: false,
+    //   }),
+    //   {
+    //     headers: {
+    //       "Content-type": "applcation/json",
+    //     },
+    //   }
+    // )
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
   }, []);
 
   // axios({
