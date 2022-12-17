@@ -117,7 +117,13 @@ const Container = styled.div`
     border-radius : 20px;
     animation : ${fadeInContainer} 1.3s ease-in-out;
     box-shadow : 7px 7px 20px 0px #636161;
-    overflow: scroll;
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+
+    &::::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 const ContentBox = styled.div`
