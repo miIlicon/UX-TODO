@@ -240,11 +240,13 @@ export default function Main() {
             date: userDate,
             content: value,
             state: false,
-        }), {
-            headers: {
-                "Content-type": "applcation/json",
+        }),
+            {
+                headers: {
+                    "Content-type": "applcation/json",
+                }
             }
-        })
+        )
             .then((res) => {
                 if (res.ok) {
                     alert("데이터를 성공적으로 넘겼어요!");
@@ -252,6 +254,23 @@ export default function Main() {
                 }
             })
     };
+
+    axios.post('/hello',
+        JSON.stringify({
+            id: 1,
+            date: "2022-12-16",
+            content: "take a shower",
+            state: false,
+        }),
+        {
+            headers: {
+                "Content-type": "application/json",
+            },
+        }
+    )
+        .then((res) => {
+            console.log(res);
+        });
 
     return (
         <>
