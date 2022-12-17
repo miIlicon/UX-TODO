@@ -5,6 +5,7 @@ import checkT from '../images/checkT.svg';
 import enrollImg from '../images/enrollImg.png';
 import lstImg from '../images/lstImg.png';
 import delBtn from '../images/delBtn.svg';
+import axios from 'axios';
 
 
 const fadeIn = keyframes`
@@ -227,7 +228,29 @@ export default function Main() {
     });
 
     const [checkState, setCheckState] = useState(false);
+    const [value, setValue] = useState("");
 
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
+
+    const handleSubmit = () => {
+        axios.post('create', JSON.stringify({
+            date: userDate,
+            content: value,
+            state: false,
+        }), {
+            headers: {
+                "Content-type": "applcation/json",
+            }
+        })
+            .then((res) => {
+                if (res.ok) {
+                    alert("데이터를 성공적으로 넘겼어요!");
+                    setValue("");
+                }
+            })
+    };
 
     return (
         <>
@@ -245,9 +268,9 @@ export default function Main() {
                             </div>
                             <div>
                                 <SubTitle>오늘의 할 일</SubTitle>
-                                <Input placeholder="제목을 입력해주세요" />
+                                <Input placeholder="제목을 입력해주세요" onChange={handleChange} defaultValue={value} />
                             </div>
-                            <Button>나의 오늘을 기록하기</Button>
+                            <Button onSubmit={handleSubmit}>나의 오늘을 기록하기</Button>
                         </ContentBox>
                     </Container>
                 </Article>
