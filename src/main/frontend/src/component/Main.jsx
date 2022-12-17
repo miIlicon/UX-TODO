@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styled, { createGlobalStyle, keyframes } from 'styled-components'
 import checkF from '../images/checkF.svg';
 import checkT from '../images/checkT.svg';
@@ -218,17 +218,11 @@ const Button = styled.button.attrs({
 
 export default function Main() {
 
-    useEffect(() => {
-        axios.get('/select')
-            .then((res) => {
-                console.log(res);
-            });
-    })
-
     const time = new Date();
     const year = time.getFullYear();
     const month = time.getMonth() + 1;
     const date = time.getDate();
+    const inputRef = useRef(null);
 
     const [userDate, setUserDate] = useState(() => {
         return `${year}년 ${month}월 ${date}일`
@@ -237,7 +231,17 @@ export default function Main() {
         return `${year}-${month}-${date}`
     })
     const [checkState, setCheckState] = useState(false);
+    const [lst, setLst] = useState([]);
     const [value, setValue] = useState("");
+
+    /* 데이터베이스에서 값을 가져오는 useEffect */
+    useEffect(() => {
+        axios.get('/select')
+            .then((res) => {
+                console.log(res);
+                setLst((prev) => [...prev, res]);
+            });
+    })
 
     const handleChange = (event) => {
         setValue(event.target.value);
@@ -257,10 +261,14 @@ export default function Main() {
             }
         )
             .then((res) => {
-                if (res.ok) {
-                    alert("데이터를 성공적으로 넘겼어요!");
-                    setValue("");
-                }
+                alert("데이터를 성공적으로 넘겼어요!");
+                setValue("");
+                inputRef.current.value = "";
+            })
+
+            .catch((err) => {
+                alert(`오류,, ${err}`);
+                inputRef.current.value = "";
             })
     };
 
@@ -297,7 +305,7 @@ export default function Main() {
                             </div>
                             <div>
                                 <SubTitle>오늘의 할 일</SubTitle>
-                                <Input placeholder="제목을 입력해주세요" onChange={handleChange} defaultValue={value} />
+                                <Input placeholder="제목을 입력해주세요" onChange={handleChange} ref={inputRef} defaultValue={value} />
                             </div>
                             <Button onClick={handleSubmit}>나의 오늘을 기록하기</Button>
                         </ContentBox>
