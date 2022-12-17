@@ -117,6 +117,7 @@ const Container = styled.div`
     border-radius : 20px;
     animation : ${fadeInContainer} 1.3s ease-in-out;
     box-shadow : 7px 7px 20px 0px #636161;
+    overflow: scroll;
 `;
 
 const ContentBox = styled.div`
@@ -161,7 +162,7 @@ const CheckBox = styled.img.attrs((props) => ({
 const DeleteBtn = styled.img.attrs({
     src: delBtn,
 })`
-    width : 5em;
+    width : 5.2em;
 
     &:hover {
         cursor : pointer;
@@ -233,51 +234,76 @@ export default function Main() {
     const [checkState, setCheckState] = useState(false);
     const [lst, setLst] = useState([]);
     const [value, setValue] = useState("");
+    const [postState, setPostState] = useState(false);
 
-    /* 데이터베이스에서 값을 가져오는 useEffect */
-    // useEffect(() => {
-    //     axios.get('/select')
-    //         .then((res) => {
-    //             console.log(res);
-    //             setLst((prev) => [...prev, res]);
-    //         });
-    // })
+    useEffect(() => {
+        axios.get('/select')
+            .then((res) => {
+                setLst(res.data);
+            });
+
+        console.log(lst)
+
+        return setPostState(false);
+    }, [postState]);
 
     const handleChange = (event) => {
         setValue(event.target.value);
     };
 
+    const handleCheck = () => {
+        if (window.confirm("해당 일정을 완료하셨나요?")) {
+            axios.put(`/update/${lst.id}`, JSON.stringify({
+                ...lst,
+                state: !lst.state,
+            }),
+                {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                }
+            )
+        }
+    }
+
+    const handleDelete = () => {
+        if (window.confirm("해당 일정을 삭제하시겠어요?")) {
+            axios.delete(`/delete/${lst.id}`)
+                .then((res) => {
+                    setPostState(true);
+                })
+        }
+    }
+
     const handleSubmit = () => {
-        alert("버튼이 눌렸어요!");
-        axios.post('/create', JSON.stringify({
-            date: userDate_B,
-            content: value,
-            state: false,
-        }),
-            {
-                headers: {
-                    "Content-type": "application/json",
-                },
-            }
-        )
-            .then((res) => {
-                alert("데이터를 성공적으로 넘겼어요!");
-                setValue("");
-                inputRef.current.value = "";
-
-                axios.get('/select')
+        if (window.confirm("게시물을 작성하시겠어요?")) {
+            if (value !== "") {
+                axios.post('/create', JSON.stringify({
+                    date: userDate_B,
+                    content: value,
+                    state: false,
+                }),
+                    {
+                        headers: {
+                            "Content-type": "application/json",
+                        },
+                    }
+                )
                     .then((res) => {
-                        // console.log(res);
-                        setLst((prev) => [...prev, res.data]);
-                    });
-                
-                console.log(lst);
-            })
+                        alert("데이터를 성공적으로 넘겼어요!");
+                        setValue("");
+                        setPostState(true);
+                        inputRef.current.value = "";
+                    })
 
-            .catch((err) => {
-                alert(`오류,, ${err}`);
-                inputRef.current.value = "";
-            })
+                    .catch((err) => {
+                        alert(`오류,, ${err}`);
+                        inputRef.current.value = "";
+                    })
+            } else {
+                alert("제대로된 값을 입력해주세요!");
+            }
+        }
     };
 
     return (
@@ -311,23 +337,27 @@ export default function Main() {
                         <ContentBox list>
                             <Content>
                                 <SubTitle>상태</SubTitle>
-                                <CheckBox state={checkState} />
-                                <CheckBox state={checkState} />
+                                {lst.map((item) => {
+                                    return (<CheckBox key={item.id} state={item.state} onClick={handleCheck} />)
+                                })}
                             </Content>
                             <Content>
                                 <SubTitle>날짜</SubTitle>
-                                <ContentText>{userDate}</ContentText>
-                                <ContentText>{userDate}</ContentText>
+                                {lst.map((item) => {
+                                    return (<ContentText key={item.id}>{item.date}</ContentText>)
+                                })}
                             </Content>
                             <Content>
                                 <SubTitle>리스트</SubTitle>
-                                <ContentText>샤워하기</ContentText>
-                                <ContentText>샤워하기</ContentText>
+                                {lst.map((item) => {
+                                    return (<ContentText key={item.id}>{item.content}</ContentText>)
+                                })}
                             </Content>
                             <Content>
                                 <SubTitle>리스트 삭제</SubTitle>
-                                <DeleteBtn />
-                                <DeleteBtn />
+                                {lst.map((item) => {
+                                    return (<DeleteBtn key={item.id} onClick={handleDelete} />)
+                                })}
                             </Content>
                         </ContentBox>
                     </Container>
