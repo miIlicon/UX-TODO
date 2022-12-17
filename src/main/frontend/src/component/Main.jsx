@@ -251,9 +251,9 @@ export default function Main() {
         setValue(event.target.value);
     };
 
-    const handleCheck = () => {
+    const handleCheck = (item) => {
         if (window.confirm("해당 일정을 완료하셨나요?")) {
-            axios.put(`/update/${lst.id}`, JSON.stringify({
+            axios.put(`/update/${item.id}`, JSON.stringify({
                 ...lst,
                 state: !lst.state,
             }),
@@ -266,9 +266,9 @@ export default function Main() {
         }
     }
 
-    const handleDelete = () => {
+    const handleDelete = (item) => {
         if (window.confirm("해당 일정을 삭제하시겠어요?")) {
-            axios.delete(`/delete/${lst.id}`)
+            axios.delete(`/delete/${item.id}`)
                 .then((res) => {
                     setPostState(true);
                 })
@@ -338,7 +338,7 @@ export default function Main() {
                             <Content>
                                 <SubTitle>상태</SubTitle>
                                 {lst.map((item) => {
-                                    return (<CheckBox key={item.id} state={item.state} onClick={handleCheck} />)
+                                    return (<CheckBox key={item.id} state={item.state} onClick={() => { handleCheck(item) }} />)
                                 })}
                             </Content>
                             <Content>
@@ -356,7 +356,7 @@ export default function Main() {
                             <Content>
                                 <SubTitle>리스트 삭제</SubTitle>
                                 {lst.map((item) => {
-                                    return (<DeleteBtn key={item.id} onClick={handleDelete} />)
+                                    return (<DeleteBtn key={item.id} onClick={() => { handleDelete(item) }} />)
                                 })}
                             </Content>
                         </ContentBox>
