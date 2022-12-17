@@ -235,7 +235,7 @@ export default function Main() {
     };
 
     const handleSubmit = () => {
-        axios.post('create', JSON.stringify({
+        axios.post('/create', JSON.stringify({
             date: userDate,
             content: value,
             state: false,
