@@ -126,7 +126,7 @@ const Container = styled.div`
     }
 `;
 
-const ContentBox = styled.div`
+const ContentBox = styled.div<{ list?: boolean }>`
     display : flex;
     flex-direction : ${(props) => (props.list ? "row" : "column")};
     font-size : 12px;
@@ -158,9 +158,9 @@ const SubTitle = styled.p`
     color: #09CE5B;
 `;
 
-const CheckBox = styled.img.attrs((props) => ({
+const CheckBox = styled.img.attrs<{ state: boolean }>((props) => ({
     src: props.state ? checkT : checkF,
-}))`
+})) <{ state: boolean }>`
     cursor : pointer;
     width : 1.3em;
 `
@@ -223,13 +223,13 @@ const Button = styled.button.attrs({
     }
 `;
 
-export default function Main() {
+export default function Main(): JSX.Element {
 
-    const time = new Date();
-    const year = time.getFullYear();
-    const month = time.getMonth() + 1;
-    const date = time.getDate();
-    const inputRef = useRef(null);
+    const time: Date = new Date();
+    const year: number = time.getFullYear();
+    const month: number = time.getMonth() + 1;
+    const date: number = time.getDate();
+    const inputRef = useRef<any>(null);
 
     const [userDate, setUserDate] = useState(() => {
         return `${year}년 ${month}월 ${date}일`
@@ -242,6 +242,16 @@ export default function Main() {
     const [value, setValue] = useState("");
     const [postState, setPostState] = useState(false);
 
+    //  타입 스크립트 인터페이스 정의
+    interface dataSet {
+        id: number;
+        date: string;
+        content: string;
+        state: boolean;
+    };
+
+    // 
+
     useEffect(() => {
         axios.get('/select')
             .then((res) => {
@@ -253,11 +263,11 @@ export default function Main() {
         return setPostState(false);
     }, [postState]);
 
-    const handleChange = (event) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value);
     };
 
-    const handleCheck = (item) => {
+    const handleCheck = (item: dataSet) => {
         if (window.confirm("해당 일정을 완료하셨나요?")) {
             axios.put(`/update/${item.id}`, JSON.stringify({
                 ...item,
@@ -275,7 +285,7 @@ export default function Main() {
         }
     }
 
-    const handleDelete = (item) => {
+    const handleDelete = (item: dataSet) => {
         if (window.confirm("해당 일정을 삭제하시겠어요?")) {
             axios.delete(`/delete/${item.id}`)
                 .then((res) => {
@@ -346,25 +356,25 @@ export default function Main() {
                         <ContentBox list>
                             <Content>
                                 <SubTitle>상태</SubTitle>
-                                {lst.map((item) => {
+                                {lst.map((item: dataSet) => {
                                     return (<CheckBox key={item.id} state={item.state} onClick={() => { handleCheck(item) }} />)
                                 })}
                             </Content>
                             <Content>
                                 <SubTitle>날짜</SubTitle>
-                                {lst.map((item) => {
+                                {lst.map((item: dataSet) => {
                                     return (<ContentText key={item.id}>{item.date}</ContentText>)
                                 })}
                             </Content>
                             <Content>
                                 <SubTitle>리스트</SubTitle>
-                                {lst.map((item) => {
+                                {lst.map((item: dataSet) => {
                                     return (<ContentText key={item.id}>{item.content}</ContentText>)
                                 })}
                             </Content>
                             <Content>
                                 <SubTitle>리스트 삭제</SubTitle>
-                                {lst.map((item) => {
+                                {lst.map((item: dataSet) => {
                                     return (<DeleteBtn key={item.id} onClick={() => { handleDelete(item) }} />)
                                 })}
                             </Content>
