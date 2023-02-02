@@ -8,7 +8,7 @@
 
 <br/>
 
-> ##### `Axios`통신과 `Rest API` 통신을 위한 `CRUD` 구현을 위해 `Spring Boot`와 `React.js`를 이용하여 투두리스트를 만들었어요  👏🏻
+> ##### Restful API System 을 구축하고  Axios통신을 이용한 CRUD 구현을 위해 Spring Boot와 React.js를 이용하여 투두리스트를 만들었어요  👏🏻
 > ##### 백엔드는 `승용`이가 프론트엔드는 `현우`가 작업을 하고, 깃허브 및 피그마, 디스코드를 이용한 협업을 진행했어요
 
 ##### 배운 주요 내용
@@ -20,10 +20,7 @@
 
 ##### 백엔드 스택
 - ##### Spring Boot
-  - ##### JSON Library
-    - ##### JSON데이터를 편하게 파싱하기 위해 사용했어요
-  - ##### Model Mapper
-    - ##### DTO와 Entity간의 효율적인 매핑을 위해 사용했어요
+- ##### Spring Data JPA
 
 ##### 프론트엔드 스택
 - ##### React.js
